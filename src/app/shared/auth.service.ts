@@ -13,10 +13,8 @@ export class AuthService {
 
   login(email : string, password : string){
     this.fireauth.signInWithEmailAndPassword(email, password).then(res => {
-      localStorage.setItem('token', 'true');
-
-
       if (res.user?.emailVerified == true) {
+        localStorage.setItem('token', 'true');
         this.router.navigate(['/dashboard']);
       }
       else {
