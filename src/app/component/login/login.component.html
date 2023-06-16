@@ -18,9 +18,10 @@
                     <label for="floatingPassword" style="color: #889696">Password</label>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div class="btn me-md-2 testReg" routerLink="/register">Register</div>
                     <button class="btn me-md-2" type="button" (click)="login()" >Login</button>
                 </div>
-                <a routerLink="/register">Register as a Locum</a>
+                <a routerLink="/forgot-password">Forgot Password?</a>
                 <div class="row mt-2">
                     <a (click)="signInWithGoogle()" style="text-decoration: none;cursor: pointer;">
                         <div class="card shadow text-center">
