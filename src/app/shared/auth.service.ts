@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { GoogleAuthProvider } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,19 @@ export class AuthService {
       alert('Error in sending verification email');
     }
     )
+  }
+
+  googleSignIn() {
+    return this.fireauth.signInWithPopup(new GoogleAuthProvider()).then( res => {
+
+      this.router.navigate(['/dashboard']);
+      // JSON.stringify(res.user?.uid)
+      localStorage.setItem('token', 'true');
+
+    }, (err:any) => {
+      alert('Error in Google Sign In');
+    }
+    );
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
