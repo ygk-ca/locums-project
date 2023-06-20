@@ -1,5 +1,5 @@
 'use strict';
-const dotenv = require( 'dotenv');
+const dotenv = require('dotenv');
 const assert = require('assert');
 
 dotenv.config();
@@ -14,8 +14,7 @@ const {
     PROJECT_ID,
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,
-    APP_ID,
-    MEASUREMENT_ID
+    APP_ID
 } = process.env;
 
 assert(PORT, 'PORT is required');
@@ -32,7 +31,6 @@ module.exports = {
         projectId: PROJECT_ID,
         storageBucket: STORAGE_BUCKET,
         messagingSenderId: MESSAGING_SENDER_ID,
-        appId: APP_ID,
-        measurementId: MEASUREMENT_ID
+        appId: APP_ID
     }
 }
