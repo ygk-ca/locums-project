@@ -10,3 +10,5 @@ class Locum {
         this.electronicMedicalRecord = electronicMedicalRecord;
     }
 }
+
+module.exports = Locum;
