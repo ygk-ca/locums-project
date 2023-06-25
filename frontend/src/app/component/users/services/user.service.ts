@@ -12,7 +12,7 @@ export type UpdateUserRequest = { uid: string } & CreateUserRequest;
 })
 export class UserService implements OnInit {
 
-  private baseUrl = 'https://us-central1-joaq-lab.cloudfunctions.net/api/users'
+  private baseUrl = 'https://us-central1-locumsfunc.cloudfunctions.net/api/users'
 
   constructor(
     private http: HttpClient
