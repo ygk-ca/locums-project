@@ -1,0 +1,33 @@
+.loginContents {
+    padding-top: 5%;
+}
+button {
+    color: #D2D4C8; 
+    border-color: #D2D4C8;
+}
+button:hover {
+    color: #D2D4C8; 
+    background-color: #5F7470;
+    border-color: #D2D4C8;
+}
+a {
+    text-decoration: none; 
+    color: #D2D4C8;
+}
+a:hover {
+    text-decoration: underline; 
+    color: #D2D4C8;
+}
+
+.testReg {
+
+    color: #D2D4C8; 
+    border-color: #D2D4C8;
+
+}
+
+.testReg:hover {
+    color: #D2D4C8; 
+    background-color: #5F7470;
+    border-color: #D2D4C8;
+}

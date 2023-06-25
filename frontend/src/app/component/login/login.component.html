@@ -1,0 +1,38 @@
+<div class="loginContents">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="../../../assets/login_img.svg" alt="" height="90%" width="90%">
+        </div>
+        <div class="col-md-4 mt-3">
+            <h3 style="color: #E0E2DB;">Welcome to Kingston Locums Portal</h3>
+
+            <form action="" class="mt-5 p-5" style="background-color: #889696; border-radius: 3%;">
+                <h5 class="mb-3" style="color: #D2D4C8;">Login </h5>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username" [(ngModel)]="email">
+                    <label for="floatingInput" style="color: #889696;">Email Address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" [(ngModel)]="password">
+                    <label for="floatingPassword" style="color: #889696">Password</label>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <div class="btn me-md-2 testReg" routerLink="/register">Register</div>
+                    <button class="btn me-md-2" type="button" (click)="login()" >Login</button>
+                </div>
+                <a routerLink="/forgot-password">Forgot Password?</a>
+                <!-- <div class="row mt-2">
+                    <a (click)="signInWithGoogle()" style="text-decoration: none;cursor: pointer;">
+                        <div class="card shadow text-center">
+                            <div class="card-body">
+                                <img src="../../../assets/icons8-google-48.png" alt="" height="24px" width="24px"> Sign In with Google
+                            </div>
+                        </div>
+                    </a>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+</div>
