@@ -1,6 +1,6 @@
 export const environment = {
   firebase: {
-    apiKey: "AIzaSyA2Rhnhshk2b9vQyYFkHZMHPotxfsCVDh8",
+    apiKey: "AIzaSyA65ZA80dJnA0WbSqngLVDngo-ejFbDKZE",
     authDomain: "locumsfunc.firebaseapp.com",
     projectId: "locumsfunc",
     storageBucket: "locumsfunc.appspot.com",
