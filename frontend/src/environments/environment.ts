@@ -1,10 +1,10 @@
 export const environment = {
   firebase: {
-    projectId: 'locums-323d9',
-    appId: '1:199326530125:web:c5ab22afa7be42aed77a04',
-    storageBucket: 'locums-323d9.appspot.com',
-    apiKey: 'AIzaSyBiQwVatIaD-VfJO97fNxctM-mGf7wmI_U',
-    authDomain: 'locums-323d9.firebaseapp.com',
-    messagingSenderId: '199326530125',
+    apiKey: "AIzaSyA65ZA80dJnA0WbSqngLVDngo-ejFbDKZE",
+    authDomain: "locumsfunc.firebaseapp.com",
+    projectId: "locumsfunc",
+    storageBucket: "locumsfunc.appspot.com",
+    messagingSenderId: "665404422752",
+    appId: "1:665404422752:web:41b6cac9db1a746bf6a105"
   },
 };

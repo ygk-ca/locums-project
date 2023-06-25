@@ -3,20 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { UserDashboardComponent } from './component/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { AuthTokenHttpInterceptorProvider } from './http-interceptors/auth-token.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent,
+    UserDashboardComponent,
     ForgotPasswordComponent,
   ],
   imports: [
@@ -24,9 +26,12 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    provideDatabase(() => getDatabase()),
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthTokenHttpInterceptorProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
