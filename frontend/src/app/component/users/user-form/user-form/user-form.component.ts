@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserFormService } from 'src/app/component/users/services/user-form.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -26,7 +27,8 @@ export class UserFormComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
     private userService: UserService,
-    private userForm: UserFormService
+    private userForm: UserFormService,
+    public auth: AuthService,
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,8 @@ export class UserFormComponent implements OnInit {
   save() {
     const { displayName, email, role, password, uid } = this.form.value;
     this.modal.close({ displayName, email, role, password, uid });
+    alert('Changes saved. Logging you out.')
+    this.auth.logout();
   }
 
 }

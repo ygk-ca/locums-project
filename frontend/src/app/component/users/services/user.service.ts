@@ -4,7 +4,7 @@ import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-export type CreateUserRequest = { displayName: string, password: string, email: string, role: string };
+export type CreateUserRequest = { displayName: string, password: string, email: string };
 export type UpdateUserRequest = { uid: string } & CreateUserRequest;
 
 @Injectable({
@@ -12,7 +12,8 @@ export type UpdateUserRequest = { uid: string } & CreateUserRequest;
 })
 export class UserService implements OnInit {
 
-  private baseUrl = 'https://us-central1-locumsfunc.cloudfunctions.net/api/users'
+  // private baseUrl = 'https://us-central1-locumsfunc.cloudfunctions.net/api/users'
+  private baseUrl = 'http://127.0.0.1:5001/locumsfunc/us-central1/api/users';
 
   constructor(
     private http: HttpClient
@@ -36,7 +37,7 @@ export class UserService implements OnInit {
     );
   }
 
-  create(user: CreateUserRequest) {
+  create(user: {CreateUserRequest, role: 'locum'}) {
     return this.http.post(`${this.baseUrl}`, user).pipe(
       map(_ => { })
     );
