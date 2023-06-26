@@ -11,7 +11,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { AuthTokenHttpInterceptorProvider } from './http-interceptors/auth-token.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import {CalendarModule} from 'src/app/component/dashboard/calendar/calendar.module'; 
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    CalendarModule
   ],
   providers: [
     AuthTokenHttpInterceptorProvider
