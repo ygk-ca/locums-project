@@ -41,10 +41,11 @@ export class UserDashboardComponent implements OnInit {
     const modalRef = this.modal.open(UserFormComponent);
     modalRef.result.then((user: any) => {
       this.userService.create(user).subscribe((_: any) => {
-        console.log('user created');
+        alert('User Created. Logging you out.');
+        this.logout();
       });
     }).catch((err: any) => {
-
+      alert('Error. Please contact Admin. ' + err);
     });
   }
 
@@ -54,10 +55,23 @@ export class UserDashboardComponent implements OnInit {
     // once user form pop up is closed, we get the value as a result
     modalRef.result.then((user: any) => {
       this.userService.edit(user).subscribe((_: any) => {
-        console.log('user edited');
+        alert('User Updated. Logging you out.');
+        this.logout();
       });
-    }).catch(() => {});
+    }).catch(err => {
+      if (err != 'modal dismissed') {
+        alert('Error. Please contact Admin. ' + err);
+      }
+    });
 
+  }
+
+  userData(user) {
+    var data:string = ``;
+    for (var key of Object.keys(user)) {
+      data += key + ": " + user[key] + '\n';
+    }
+    return data;
   }
 
   logout() {

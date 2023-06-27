@@ -5,7 +5,7 @@ import * as admin from "firebase-admin";
 
 export async function create(req: Request, res: Response) {
   try {
-    const {displayName, password, email, role} = req.body;
+    const {displayName, password, email, role="locum"} = req.body;
 
     if (!displayName || !password || !email || !role) {
       return res.status(400).send({message: "Missing fields"});
@@ -60,14 +60,19 @@ export async function get(req: Request, res: Response) {
 export async function patch(req: Request, res: Response) {
   try {
     const {id} = req.params;
-    const {displayName, password, email, role} = req.body;
+    const {displayName, role} = req.body;
 
-    if (!id || !displayName || !password || !email || !role) {
+    if (role) {
+      await admin.auth().setCustomUserClaims(id, {role});
+      const user = await admin.auth().getUser(id);
+      return res.status(204).send({user: mapUser(user)});
+    }
+
+    if (!id || !displayName) {
       return res.status(400).send({message: "Missing fields"});
     }
 
-    await admin.auth().updateUser(id, {displayName, password, email});
-    await admin.auth().setCustomUserClaims(id, {role});
+    await admin.auth().updateUser(id, {displayName});
     const user = await admin.auth().getUser(id);
 
     return res.status(204).send({user: mapUser(user)});

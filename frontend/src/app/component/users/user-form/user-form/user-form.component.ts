@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
 
@@ -49,10 +48,8 @@ export class UserFormComponent implements OnInit {
   }
 
   save() {
-    const { displayName, email, role, password, uid } = this.form.value;
-    this.modal.close({ displayName, email, role, password, uid });
-    alert('Changes saved. Logging you out.')
-    this.auth.logout();
+    const { displayName, uid } = this.form.value;
+    this.modal.close({ displayName, uid });
   }
 
 }

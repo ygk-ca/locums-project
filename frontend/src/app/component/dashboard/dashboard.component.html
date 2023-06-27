@@ -1,58 +1,34 @@
-<div id="dashboardComponent">
-  <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
-  <br><br>
-  <calendar-component></calendar-component>
-  
-    <div *ngIf="user$ | async; let user"
+<div class="container" id="dashboardComponent">
+  <div *ngIf="user$ | async; let user"
          class="col-12">
-      <div class="d-flex justify-content-between my-3">
-        <h4> Me </h4>
-        <button class="btn btn-primary" *ngIf="user$ | async; let user"
-        (click)="edit(user)">
-  Edit Profile
-  </button>
-      </div>
+      <div class="d-flex" style="justify-content: space-between;">
+        <h4> Welcome back {{user.displayName}}! </h4>
+        <div>
+          <button class="btn btn-primary"
+          (click)="edit(user)">Edit Profile</button>
+          &nbsp;
+          <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
+        </div>
 
-  
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div style="width: 50%;">
-            <h5 class="mb-1">{{user.displayName}}</h5>
-            <small>{{user.email}}</small>
-            <small class="d-block">User Creation Time: {{user.creationTime}}</small>
-            <small class="d-block">User Last Sign In Time: {{user.lastSignInTime}}</small>
-          </div>
-          <small>{{user.role}}</small>
-        </li>
-      </ul>
-  
-    </div>
-  
-    <div *ngIf="users$ | async; let users">
-    <div class="col-12">
-      <div class="d-flex justify-content-between my-3">
-        <h4> All Users </h4>
-  
-        <button class="btn btn-primary"
-                (click)="create()">
-          New User
-        </button>
       </div>
-  
+    </div>
+    <br>
+  <div>
+    <calendar-component></calendar-component>
+  </div>
+  <br>
+  <div class="container" *ngIf="users$ | async; let users">
+    <div>
+      <h4>Admin Control Panel</h4>
       <ul
-          class="list-group">
-        <li *ngFor="let user of users"
-            class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <h5 class="mb-1">{{user.displayName}}</h5>
-            <small class="d-block">User Email: {{user.email}}</small>
-            <small class="d-block">User Uid: {{user.uid}}</small>
-            <small class="d-block">User Creation Time: {{user.creationTime}}</small>
-            <small class="d-block">User Last Sign In Time: {{user.lastSignInTime}}</small>
-          </div>
-          <small>{{user.role}}</small>
-        </li>
-      </ul>
+      class="list-group">
+    <li *ngFor="let user of users"
+        class="list-group-item d-flex justify-content-between align-items-center">
+      <div style="white-space: pre-line">
+        <h5 class="mb-1">{{user.displayName}}</h5>
+          {{userData(user)}}
+      </div>
+    </li>
+  </ul>
     </div>
   </div>
-</div>
