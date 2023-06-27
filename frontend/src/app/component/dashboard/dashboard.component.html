@@ -1,20 +1,19 @@
-<div class="container" id="dashboardComponent">
-  <div *ngIf="user$ | async; let user"
-         class="col-12">
-      <div class="d-flex" style="justify-content: space-between;">
-        <h4> Welcome back {{user.displayName}}! </h4>
-        <div>
+<div class="container">
+  <div *ngIf="user$ | async; let user">
+      <div>
+        <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
+        <div style="float: right; padding-top: 3%;">
           <button class="btn btn-primary"
           (click)="edit(user)">Edit Profile</button>
           &nbsp;
           <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
         </div>
-
       </div>
+      <h4 style="text-align: center;"> Welcome back {{user.displayName}}! </h4>
+      <calendar-component></calendar-component>
     </div>
     <br>
   <div>
-    <calendar-component></calendar-component>
   </div>
   <br>
   <div class="container" *ngIf="users$ | async; let users">

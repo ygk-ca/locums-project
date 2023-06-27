@@ -37,7 +37,7 @@ export class UserService implements OnInit {
     );
   }
 
-  create(user: {CreateUserRequest, role: 'locum'}) {
+  create(user: {CreateUserRequest}) {
     return this.http.post(`${this.baseUrl}`, user).pipe(
       map(_ => { })
     );
