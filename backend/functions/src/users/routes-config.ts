@@ -6,7 +6,6 @@ import {isAuthorized} from "../auth/authorized";
 
 export function routesConfig(app: Application) {
   app.post("/users",
-    isAuthenticated,
     create
   );
 

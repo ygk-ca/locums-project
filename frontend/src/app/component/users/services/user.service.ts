@@ -4,7 +4,7 @@ import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-export type CreateUserRequest = { displayName: string, password: string, email: string };
+export type CreateUserRequest = { displayName: string, password: string, email: string, role: string };
 export type UpdateUserRequest = { uid: string } & CreateUserRequest;
 
 @Injectable({
@@ -37,7 +37,7 @@ export class UserService implements OnInit {
     );
   }
 
-  create(user: {CreateUserRequest}) {
+  create(user: CreateUserRequest) {
     return this.http.post(`${this.baseUrl}`, user).pipe(
       map(_ => { })
     );

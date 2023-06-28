@@ -19,6 +19,8 @@ export class UserFormComponent implements OnInit {
     displayName: new FormControl(''),
     password: new FormControl(''),
     role: new FormControl(''),
+    phoneNumber: new FormControl(''),
+    homeAddress: new FormControl('')
   });
   title$: Observable<string>;
   user$: Observable<{}>;

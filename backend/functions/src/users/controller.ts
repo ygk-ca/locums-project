@@ -4,21 +4,28 @@ import {Request, Response} from "express";
 import * as admin from "firebase-admin";
 
 export async function create(req: Request, res: Response) {
-  try {
-    const {displayName, password, email, role} = req.body;
+  const allowedOrigin = "http://localhost:4200"; // Specify the allowed URL
+  const requestOrigin = req.headers.origin;
 
-    if (!displayName || !password || !email || !role) {
-      return res.status(400).send({message: "Missing fields"});
+  if (requestOrigin === allowedOrigin) {
+    try {
+      const {displayName, password, email, role} = req.body;
+
+      if (!displayName || !password || !email || !role) {
+        return res.status(400).send({message: "Missing fields"});
+      }
+
+      const {uid} = await admin.auth().createUser({
+        displayName: displayName,
+        password: password,
+        email: email});
+      await admin.auth().setCustomUserClaims(uid, {"role": role});
+      return res.status(201).send({uid});
+    } catch (err) {
+      return handleError(res, err);
     }
-
-    const {uid} = await admin.auth().createUser({
-      displayName: displayName,
-      password: password,
-      email: email});
-    await admin.auth().setCustomUserClaims(uid, {"role": role});
-    return res.status(201).send({uid});
-  } catch (err) {
-    return handleError(res, err);
+  } else {
+    return res.status(401).send({message: "Unauthorized"});
   }
 }
 

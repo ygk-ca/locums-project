@@ -1,17 +1,37 @@
 <ng-container *ngIf="user$ | async"></ng-container>
 <div class="modal-header">
-  <h4 class="modal-title"
-      id="modal-title">{{ title$ | async}}</h4>
+  <!-- <h4 class="modal-title"
+      id="modal-title">{{ title$ | async}}</h4> -->
+      <h4 class="modal-title">
+        Edit Your Profile
+      </h4>
 </div>
 <div class="modal-body">
   <form [formGroup]="form"
         (ngSubmit)="save()">
+
     <div class="form-group">
       <label>Full Name</label>
       <input type="string"
              formControlName="displayName"
              class="form-control"
              placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input 
+             formControlName="phoneNumber"
+             class="form-control"
+             placeholder="Enter your phone number"
+             type="tel" name="tel"
+           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+    </div>
+    <div class="form-group">
+      <label>Home Address</label>
+      <input type="string"
+             formControlName="homeAddress"
+             class="form-control"
+             placeholder="Enter your home address">
     </div>
     <br>
   </form>

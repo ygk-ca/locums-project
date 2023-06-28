@@ -7,5 +7,6 @@ export interface User {
     email: string;
     creationTime: string;
     lastSignInTime: string;
-
+    phoneNumber: string;
+    homeAddress: string;
 }

@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GoogleAuthProvider } from '@angular/fire/auth';
+import { GoogleAuthProvider, user } from '@angular/fire/auth';
+import { CreateUserRequest, UserService } from 'src/app/component/users/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private fireauth : AngularFireAuth, private router : Router) { }
+  constructor(private fireauth : AngularFireAuth,  private userService : UserService, private router : Router) { }
 
   login(email : string, password : string){
     this.fireauth.signInWithEmailAndPassword(email, password).then(res => {
@@ -19,6 +20,7 @@ export class AuthService {
       }
       else {
         alert('Please verify your email address. Check your inbox.');
+        this.sendVerificationMail(res.user);
         this.router.navigate(['/login']);
       }
 
@@ -28,15 +30,26 @@ export class AuthService {
     })
   }
 
-  register(email : string, password : string){
-    this.fireauth.createUserWithEmailAndPassword(email, password).then(res => {
-      alert('Please verify your email address. Check your inbox.');
-      this.router.navigate(['/login']);
-      this.sendVerificationMail(res.user);
-    }, err => {
-      alert('Registration Failed');
-      this.router.navigate(['/register']);
-    })
+  async register(userData : object) {
+
+    let emailExists = await this.checkEmailExists(userData['email']);
+
+    if (emailExists) {
+      alert("Email already exists!")
+      return;
+    }
+
+    const userAccount: CreateUserRequest = {
+      displayName: userData['displayName'],
+      email: userData['email'],
+      password: userData['password'],
+      role: 'locum'
+    }
+
+    this.userService.create(userAccount).subscribe(_ => {});
+    alert('Registration Successful! Proceed to login.')
+    this.router.navigate(['/login']);
+
   }
 
   logout(){
@@ -59,9 +72,7 @@ export class AuthService {
   }
 
   sendVerificationMail(user: any) {
-    user.sendEmailVerification().then((res: any) => {
-      this.router.navigate(['/login']);
-    }, (err:any) => {
+    user.sendEmailVerification().then((res: any) => {}, (err:any) => {
       alert('Error in sending verification email');
     }
     )
@@ -78,6 +89,18 @@ export class AuthService {
       alert('Error in Google Sign In');
     }
     );
+  }
+
+  async checkEmailExists(email : string) {
+    return this.fireauth.fetchSignInMethodsForEmail(email).then(res => {
+      let methods = res;
+      if (methods.length == 0) {
+        return false;
+      }
+      else {
+        return true
+      }
+    });
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree

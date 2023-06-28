@@ -12,26 +12,23 @@ export class RegisterComponent implements OnInit {
   email : string = '';
   password : string = '';
   displayName : string = '';
-  userAccount : any;
 
   constructor(private auth : AuthService, private userService : UserService) {}
 
   ngOnInit(): void {}
 
-  register() {
+  async register() {
     if (this.email == '' || this.password == '' || this.displayName == '') {
       alert('Please fill all the fields');
       return;
     }
 
-    this.userAccount = {
-      displayName: this.displayName,
-      email: this.email,
-      password: this.password,
-      role: 'locum'
+    if (this.password.length < 6) {
+      alert('Password must be at least 6 characters');
+      return;
     }
 
-    this.userService.create(this.userAccount);
+    this.auth.register({email: this.email, password: this.password, displayName: this.displayName});
     this.email = '';
     this.password = '';
     this.displayName = '';
