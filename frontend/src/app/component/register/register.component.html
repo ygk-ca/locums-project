@@ -14,8 +14,12 @@
                         <label for="floatingInput" style="color: #889696;">Full Name</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingPhone" placeholder="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber">
+                        <label for="floatingPhone" style="color: #889696;">Phone Number</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingEmail" placeholder="Username" name="username" [(ngModel)]="email">
-                        <label for="floatingInput" style="color: #889696;">Email Address</label>
+                        <label for="floatingEmail" style="color: #889696;">Email Address</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" [(ngModel)]="password">

@@ -4,7 +4,7 @@ import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-export type CreateUserRequest = { displayName: string, password: string, email: string, role: string };
+export type CreateUserRequest = { displayName: string, password: string, email: string, role: string, phoneNumber: string };
 export type UpdateUserRequest = { uid: string } & CreateUserRequest;
 
 @Injectable({

@@ -9,7 +9,7 @@ export async function create(req: Request, res: Response) {
 
   if (requestOrigin === allowedOrigin) {
     try {
-      const {displayName, password, email, role} = req.body;
+      const {displayName, phoneNumber, password, email, role} = req.body;
 
       if (!displayName || !password || !email || !role) {
         return res.status(400).send({message: "Missing fields"});
@@ -18,7 +18,8 @@ export async function create(req: Request, res: Response) {
       const {uid} = await admin.auth().createUser({
         displayName: displayName,
         password: password,
-        email: email});
+        email: email,
+        phoneNumber: phoneNumber});
       await admin.auth().setCustomUserClaims(uid, {"role": role});
       return res.status(201).send({uid});
     } catch (err) {
@@ -47,6 +48,7 @@ function mapUser(user: admin.auth.UserRecord) {
     email: user.email || "",
     displayName: user.displayName || "",
     role,
+    phoneNumber: user.phoneNumber || "",
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime,
   };
@@ -65,7 +67,7 @@ export async function get(req: Request, res: Response) {
 export async function patch(req: Request, res: Response) {
   try {
     const {id} = req.params;
-    const {displayName, role} = req.body;
+    const {displayName, phoneNumber, role} = req.body;
 
     if (role) {
       await admin.auth().setCustomUserClaims(id, {role});
@@ -73,11 +75,11 @@ export async function patch(req: Request, res: Response) {
       return res.status(204).send({user: mapUser(user)});
     }
 
-    if (!id || !displayName) {
+    if (!id || !displayName || !phoneNumber) {
       return res.status(400).send({message: "Missing fields"});
     }
 
-    await admin.auth().updateUser(id, {displayName});
+    await admin.auth().updateUser(id, {displayName, phoneNumber});
     const user = await admin.auth().getUser(id);
 
     return res.status(204).send({user: mapUser(user)});

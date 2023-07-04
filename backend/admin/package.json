@@ -1,0 +1,17 @@
+{
+  "name": "admin-test",
+  "version": "1.0.0",
+  "description": "testing locums services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^9.23.0",
+    "firebase-admin": "^11.9.0"
+  },
+  "private": true
+}

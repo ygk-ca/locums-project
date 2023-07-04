@@ -43,6 +43,7 @@ export class AuthService {
       displayName: userData['displayName'],
       email: userData['email'],
       password: userData['password'],
+      phoneNumber: userData['phoneNumber'],
       role: 'locum'
     }
 

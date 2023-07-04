@@ -18,6 +18,36 @@ export class DataService {
       start: DayPilot.Date.today().addHours(12),
       end: DayPilot.Date.today().addHours(18),
       text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+    },
+    {
+      id: "2",
+      start: DayPilot.Date.today().addHours(12),
+      end: DayPilot.Date.today().addHours(18),
+      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+    },
+    {
+      id: "2",
+      start: DayPilot.Date.today().addHours(12),
+      end: DayPilot.Date.today().addHours(18),
+      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+    },
+    {
+      id: "2",
+      start: DayPilot.Date.today().addHours(12),
+      end: DayPilot.Date.today().addHours(18),
+      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+    },
+    {
+      id: "2",
+      start: DayPilot.Date.today().addHours(12),
+      end: DayPilot.Date.today().addHours(18),
+      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+    },
+    {
+      id: "2",
+      start: DayPilot.Date.today().addHours(12),
+      end: DayPilot.Date.today().addHours(18),
+      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
     }
   ];
 

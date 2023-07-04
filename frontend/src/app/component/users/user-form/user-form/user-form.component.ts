@@ -20,7 +20,6 @@ export class UserFormComponent implements OnInit {
     password: new FormControl(''),
     role: new FormControl(''),
     phoneNumber: new FormControl(''),
-    homeAddress: new FormControl('')
   });
   title$: Observable<string>;
   user$: Observable<{}>;
@@ -50,8 +49,14 @@ export class UserFormComponent implements OnInit {
   }
 
   save() {
-    const { displayName, uid } = this.form.value;
-    this.modal.close({ displayName, uid });
+    let { displayName, phoneNumber, uid } = this.form.value;
+    if (!displayName || !phoneNumber) {
+      alert('Missing Fields!');
+    }
+    else {
+      phoneNumber = "+1" + phoneNumber;
+      this.modal.close({ displayName, phoneNumber, uid });
+    }
   }
 
 }

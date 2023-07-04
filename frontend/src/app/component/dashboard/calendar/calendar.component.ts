@@ -117,7 +117,7 @@ export class CalendarComponent implements AfterViewInit {
   };
 
   constructor(private ds: DataService) {
-    this.viewWeek();
+    this.viewMonth();
   }
 
   ngAfterViewInit(): void {

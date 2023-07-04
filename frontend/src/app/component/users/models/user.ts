@@ -8,5 +8,4 @@ export interface User {
     creationTime: string;
     lastSignInTime: string;
     phoneNumber: string;
-    homeAddress: string;
 }
