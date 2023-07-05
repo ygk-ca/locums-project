@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export type CreateUserRequest = { displayName: string, password: string, email: string, role: string, phoneNumber: string };
@@ -45,7 +45,11 @@ export class UserService implements OnInit {
 
   edit(user: UpdateUserRequest) {
     return this.http.patch(`${this.baseUrl}/${user.uid}`, user).pipe(
-      map(_ => { })
+      map(_ => { }),
+      catchError((err, caught) => {
+        alert('Error in User Edit. Please make sure your Phone Number is unique and is in the form: 6471234567.');
+        return err;
+      })
     );
   }
 
@@ -53,7 +57,11 @@ export class UserService implements OnInit {
     return this.http.get(`http://127.0.0.1:5001/locumsfunc/us-central1/api/calendar`).pipe(
       map(result => {
         return result;
-      })
+      }),
+      // catchError((err, caught) => {
+      //   console.log('calendar err');
+      //   return err;
+      // })
     );
   }
 }

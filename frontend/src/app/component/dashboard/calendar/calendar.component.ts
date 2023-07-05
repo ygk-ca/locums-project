@@ -115,7 +115,8 @@ export class CalendarComponent implements AfterViewInit {
   };
 
   configMonth: DayPilot.MonthConfig = {
-    eventMoveHandling: "Disabled"
+    eventMoveHandling: "Disabled",
+    eventClickHandling: "ContextMenu"
   };
 
   constructor(private ds: DataService) {

@@ -54,7 +54,9 @@ export class UserFormComponent implements OnInit {
       alert('Missing Fields!');
     }
     else {
-      phoneNumber = "+1" + phoneNumber;
+      if (phoneNumber[0] !== "+" && phoneNumber[0] !== "1"){
+        phoneNumber = "+1" + phoneNumber;
+      }
       this.modal.close({ displayName, phoneNumber, uid });
     }
   }
