@@ -7,6 +7,7 @@ import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import {routesConfig} from "./users/routes-config";
 const serviceAccount = require("./key/serviceAccountKey.json");
+export const host = "http://localhost:4200";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -14,7 +15,7 @@ admin.initializeApp({
 });
 
 const app = express();
-app.use(cors({origin: "http://localhost:4200"}));
+app.use(cors({origin: host}));
 app.use(bodyParser.json());
 routesConfig(app);
 

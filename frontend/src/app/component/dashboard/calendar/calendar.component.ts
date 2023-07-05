@@ -94,10 +94,12 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   configDay: DayPilot.CalendarConfig = {
+    eventMoveHandling: "Disabled"
   };
 
   configWeek: DayPilot.CalendarConfig = {
     viewType: "Week",
+    eventMoveHandling: "Disabled"
     // onTimeRangeSelected: async (args) => {
     //   const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
     //   const dp = args.control;
@@ -113,7 +115,7 @@ export class CalendarComponent implements AfterViewInit {
   };
 
   configMonth: DayPilot.MonthConfig = {
-
+    eventMoveHandling: "Disabled"
   };
 
   constructor(private ds: DataService) {
@@ -130,6 +132,8 @@ export class CalendarComponent implements AfterViewInit {
     this.ds.getEvents(from, to).subscribe(result => {
       this.events = result;
     });
+
+    this.ds.getCalendar().subscribe(result => {console.log(result);});
   }
 
   viewDay():void {

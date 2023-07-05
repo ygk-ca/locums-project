@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {Application} from "express";
-import {create, all, get, patch, remove} from "./controller";
+import {create, all, get, patch, remove, calendar} from "./controller";
 import {isAuthenticated} from "../auth/authenticated";
 import {isAuthorized} from "../auth/authorized";
 
@@ -32,5 +32,9 @@ export function routesConfig(app: Application) {
     isAuthenticated,
     isAuthorized({hasRole: ["admin"]}),
     remove,
+  ]);
+
+  app.get("/calendar", [
+    calendar,
   ]);
 }

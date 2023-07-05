@@ -48,4 +48,12 @@ export class UserService implements OnInit {
       map(_ => { })
     );
   }
+
+  calendar() {
+    return this.http.get(`http://127.0.0.1:5001/locumsfunc/us-central1/api/calendar`).pipe(
+      map(result => {
+        return result;
+      })
+    );
+  }
 }

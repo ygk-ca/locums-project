@@ -2,9 +2,10 @@
 /* eslint-disable require-jsdoc */
 import {Request, Response} from "express";
 import * as admin from "firebase-admin";
+import {host} from "..";
 
 export async function create(req: Request, res: Response) {
-  const allowedOrigin = "http://localhost:4200"; // Specify the allowed URL
+  const allowedOrigin = host; // Specify the allowed URL
   const requestOrigin = req.headers.origin;
 
   if (requestOrigin === allowedOrigin) {
@@ -100,4 +101,62 @@ export async function remove(req: Request, res: Response) {
 
 function handleError(res: Response, err: any) {
   return res.status(500).send({message: `${err.code} - ${err.message}`});
+}
+
+export async function calendar(req: Request, res: Response) {
+  const allowedOrigin = host; // Specify the allowed URL
+  const requestOrigin = req.headers.origin;
+
+  if (requestOrigin === allowedOrigin) {
+    try {
+      return res.status(200).send(`[
+        {
+          id: "1",
+          start: DayPilot.Date.today().addDays(1).addHours(10),
+          end: DayPilot.Date.today().addDays(1).addHours(16),
+          text: "Belleville Clinic #3 \n Dr. Jake John \n 10:00 AM - 4:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        },
+        {
+          id: "2",
+          start: DayPilot.Date.today().addHours(12),
+          end: DayPilot.Date.today().addHours(18),
+          text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
+        }
+      ];`);
+    } catch (err) {
+      return handleError(res, err);
+    }
+  } else {
+    return res.status(401).send({message: "Unauthorized"});
+  }
 }
