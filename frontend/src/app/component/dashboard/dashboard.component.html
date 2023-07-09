@@ -1,33 +1,14 @@
-<div class="container">
-  <div *ngIf="user$ | async; let user">
-      <div>
-        <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
-        <div style="float: right; padding-top: 3%;">
-          <button class="btn btn-primary"
-          (click)="edit(user)">Edit Profile</button>
-          &nbsp;
-          <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
-        </div>
-      </div>
-      <h4 style="text-align: center;"> Welcome back {{user.displayName}}! </h4>
-      <calendar-component></calendar-component>
-    </div>
-    <br>
-  <div>
-  </div>
-  <br>
-  <div class="container" *ngIf="users$ | async; let users">
+<div class="container" *ngIf="user$ | async; let user">
     <div>
-      <h4>Admin Control Panel</h4>
-      <ul
-      class="list-group">
-    <li *ngFor="let user of users"
-        class="list-group-item d-flex justify-content-between align-items-center">
-      <div style="white-space: pre-line">
-        <h5 class="mb-1">{{user.displayName}}</h5>
-          {{userData(user)}}
+      <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
+      <div style="float: right; padding-top: 3%;">
+        <button routerLink="/admin" *ngIf="user.role == 'admin'" class="btn btn-primary">Control Panel</button>
+        &nbsp;
+        <button class="btn btn-primary" (click)="edit(user)">Edit Profile</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
       </div>
-    </li>
-  </ul>
     </div>
-  </div>
+    <h4 style="text-align: center;"> Welcome back {{user.displayName}}! </h4>
+    <calendar-component></calendar-component>
+</div>

@@ -1,0 +1,14 @@
+<div class="container" *ngIf="user$ | async; let user">
+    <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
+    <div style="float: right; padding-top: 3%;">
+        <button routerLink="/dashboard" class="btn btn-primary">Back to Dashboard</button>
+        &nbsp;
+        <button (click)="logout()" class="btn btn-primary">Logout</button>
+    </div>
+    <div *ngIf="user.role == 'admin'" class="container" id="admin">
+        <h4>Admin Control Panel</h4>
+        <button type="button" class="btn btn-primary">Set User Role</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary">Delete User</button>
+    </div>
+</div>

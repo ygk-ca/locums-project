@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import {CalendarModule} from 'src/app/component/dashboard/calendar/calendar.module'; 
 import { UserFormComponent } from './component/users/user-form/user-form/user-form.component';
+import { AdminComponent } from './component/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserFormComponent } from './component/users/user-form/user-form/user-fo
     RegisterComponent,
     UserDashboardComponent,
     ForgotPasswordComponent,
-    UserFormComponent
+    UserFormComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
