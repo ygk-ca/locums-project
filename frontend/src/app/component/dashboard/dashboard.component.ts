@@ -59,7 +59,7 @@ export class UserDashboardComponent implements OnInit {
         this.logout();
       });
     }).catch(err => {
-      if (err != 'modal dismissed') {
+      if (err != 'modal dismissed' && err != 0) {
         alert('Error. Please contact Admin. ' + err);
       }
     });

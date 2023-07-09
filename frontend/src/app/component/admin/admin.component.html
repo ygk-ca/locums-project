@@ -6,9 +6,29 @@
         <button (click)="logout()" class="btn btn-primary">Logout</button>
     </div>
     <div *ngIf="user.role == 'admin'" class="container" id="admin">
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Set User Role</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+              class="btn btn-outline-danger"
+              (click)="modal.dismiss()">Cancel</button>
+      <button type="button"
+              class="btn btn-primary"
+              (click)="modal.close('role')">Save</button>
+            </div>
+        </ng-template>
         <h4>Admin Control Panel</h4>
         <button type="button" class="btn btn-primary">Set User Role</button>
         &nbsp;
         <button type="button" class="btn btn-primary">Delete User</button>
+        <br><br>
+        <button class="btn btn-primary" (click)="open(content)">Launch demo modal</button>
     </div>
 </div>
