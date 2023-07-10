@@ -41,9 +41,9 @@ export class AdminComponent {
     );
   }
 
-  open(content) {
+  open(content: any) {
 		this.modalService.open(content).result.then(
-			buttonType => {
+			async buttonType => {
 
         if (buttonType == 'role') {
           this.email = this.setRole.get('email')?.value;
@@ -68,7 +68,21 @@ export class AdminComponent {
             alert('Please enter an Email')
           }
           else {
-            console.log(this.delEmail)
+            let emailExists = await this.auth.checkEmailExists(this.delEmail)
+              .then(res => {
+                return res;
+              })
+              .catch(() => {
+                return false;
+              });
+
+            if (emailExists) {
+              this.userService.delete(this.delEmail);
+              alert('User Successfully Deleted!')
+            }
+            else {
+              alert('User with that Email does not exist!')
+            }
           }
           this.delEmail = '';
           this.deleteUser = this.fb.group({

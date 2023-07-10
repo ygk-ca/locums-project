@@ -64,4 +64,8 @@ export class UserService implements OnInit {
       // })
     );
   }
+
+  delete(email: string) {
+    return this.http.delete(`${this.baseUrl}`, {body: email}).subscribe(_ => {});
+  }
 }

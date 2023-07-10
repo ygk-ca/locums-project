@@ -5,26 +5,16 @@ const admin = require("firebase-admin");
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const serviceAccount = require("./serviceAccountKey.json");
-const { userInfo } = require("os");
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://locumsfunc-default-rtdb.firebaseio.com",
   });
 
 
-  admin.auth().createUser({
-    email: 'user@example.com',
-    emailVerified: false,
-    phoneNumber: '+16473082145',
-    password: 'secretPassword',
-    displayName: 'John Doe',
-    photoURL: 'http://www.example.com/12345678/photo.png',
-    disabled: false,
-  })
-  .then((userRecord) => {
-    console.log(userRecord);
-  })
-  .catch((error) => {
-    console.log('Error creating new user:', error);
-  });
-
+    const id = admin.auth().getUserByEmail('hsami@cityofkingston.ca').then(
+      (userInfo) => {
+        console.log(userInfo.uid);
+        return userInfo.uid;
+      }
+    );
+    //await admin.auth().deleteUser(id);

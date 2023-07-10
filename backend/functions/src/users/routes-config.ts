@@ -28,7 +28,7 @@ export function routesConfig(app: Application) {
     patch,
   ]);
   // deletes :id user
-  app.delete("/users/:id", [
+  app.delete("/users", [
     isAuthenticated,
     isAuthorized({hasRole: ["admin"]}),
     remove,
