@@ -10,45 +10,9 @@ export class DataService {
   events: any[] = [
     {
       id: "1",
-      start: new DayPilot.Date("2023-07-02T13:30:00"),
-      end: DayPilot.Date.today().addDays(1).addHours(16),
+      start: new DayPilot.Date("2023-07-02T07:30:00"),
+      end: new DayPilot.Date("2023-07-02T16:30:00"),
       text: "Belleville Clinic #3 \n Dr. Jake John \n 10:00 AM - 4:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
-    },
-    {
-      id: "2",
-      start: DayPilot.Date.today().addHours(12),
-      end: DayPilot.Date.today().addHours(18),
-      text: "Kingston Clinic #1 \n Dr. John Cena \n 12:00 PM - 6:00 PM",
     }
   ];
 

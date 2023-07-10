@@ -5,6 +5,7 @@ import { User } from '../users/models/user';
 import { Observable, filter, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -15,8 +16,21 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AdminComponent {
   users$: Observable<User[]>;
   user$: Observable<User>;
+  public setRole: FormGroup;
+  public deleteUser: FormGroup;
+  email: string = '';
+  role: string = '';
+  delEmail: string = '';
 
-  constructor(private userService: UserService, private afAuth: AngularFireAuth, private auth: AuthService, private modalService: NgbModal) {}
+  constructor(private userService: UserService, private afAuth: AngularFireAuth, private auth: AuthService, private modalService: NgbModal, private fb: FormBuilder) {
+    this.setRole = this.fb.group({
+      email: '',
+      role: ''
+    })
+    this.deleteUser = this.fb.group({
+      delEmail: ''
+    })
+  }
   
   ngOnInit() {
     this.users$ = this.userService.users$;
@@ -32,14 +46,45 @@ export class AdminComponent {
 			buttonType => {
 
         if (buttonType == 'role') {
-          console.log('role updated')
+          this.email = this.setRole.get('email')?.value;
+          this.role = this.setRole.get('role')?.value;
+          if (this.email == '' || this.role == '') {
+            alert('Error: Missing Fields');
+          }
+          else {
+            console.log(this.email, this.role);
+          }
+          this.email = '';
+          this.role = '';
+          this.setRole = this.fb.group({
+            email: '',
+            role: ''
+          })
         }
 
         if (buttonType == 'del') {
-          console.log('user deleted')
+          this.delEmail = this.deleteUser.get('delEmail')?.value;
+          if (this.delEmail == '') {
+            alert('Please enter an Email')
+          }
+          else {
+            console.log(this.delEmail)
+          }
+          this.delEmail = '';
+          this.deleteUser = this.fb.group({
+            delEmail: ''
+          })
         }
         
-			}, err => {/* modal is closed */}
+			}, err => {
+        /* modal is closed */
+        this.email = '';
+        this.role = '';
+        this.setRole = this.fb.group({
+          email: '',
+          role: ''
+        })
+      }
 		);
 	}
 
