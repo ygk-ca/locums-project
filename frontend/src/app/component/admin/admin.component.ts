@@ -18,9 +18,11 @@ export class AdminComponent {
   user$: Observable<User>;
   public setRole: FormGroup;
   public deleteUser: FormGroup;
+  public getRole: FormGroup;
   email: string = '';
   role: string = '';
   delEmail: string = '';
+  roleEmail: string = '';
 
   constructor(private userService: UserService, private afAuth: AngularFireAuth, private auth: AuthService, private modalService: NgbModal, private fb: FormBuilder) {
     this.setRole = this.fb.group({
@@ -29,6 +31,9 @@ export class AdminComponent {
     })
     this.deleteUser = this.fb.group({
       delEmail: ''
+    })
+    this.getRole = this.fb.group({
+      roleEmail: ''
     })
   }
   
@@ -87,6 +92,37 @@ export class AdminComponent {
           this.delEmail = '';
           this.deleteUser = this.fb.group({
             delEmail: ''
+          })
+        }
+
+        if (buttonType == 'check') {
+          this.roleEmail = this.getRole.get('roleEmail')?.value;
+          if (this.roleEmail == '') {
+            alert('Please enter an Email')
+          }
+          else {
+            let emailExists = await this.auth.checkEmailExists(this.roleEmail)
+              .then(res => {
+                return res;
+              })
+              .catch(() => {
+                return false;
+              });
+
+            if (emailExists) {
+              let info = await this.userService.getUser(this.roleEmail);
+              console.log(
+                info
+              );
+              
+            }
+            else {
+              alert('User with that Email does not exist!')
+            }
+          }
+          this.roleEmail = '';
+          this.getRole = this.fb.group({
+            roleEmail: ''
           })
         }
         

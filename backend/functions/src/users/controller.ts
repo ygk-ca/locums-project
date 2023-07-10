@@ -124,3 +124,18 @@ export async function calendar(req: Request, res: Response) {
     return res.status(401).send({message: "Unauthorized"});
   }
 }
+
+export async function getuser(req: Request, res: Response) {
+  try {
+    let {id} = req.params;
+    id = await admin.auth().getUserByEmail(id).then(
+      (userInfo) => {
+        return userInfo.uid;
+      }
+    );
+    const user = await admin.auth().getUser(id);
+    return res.status(200).send(mapUser(user));
+  } catch (err) {
+    return handleError(res, err);
+  }
+}
