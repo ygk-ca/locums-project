@@ -70,8 +70,10 @@ export class UserService implements OnInit {
   }
 
   async getUser(email: string) {
-    return this.http.get(`${this.baseUrl}/getByEmail/${email}`).subscribe(res => {
-      return res;
-    })
+    return this.http.get(`${this.baseUrl}/getByEmail/${email}`).pipe(
+      map(result => {
+        return result;
+      })
+    )
   }
 }

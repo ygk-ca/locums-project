@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UserService } from '../users/services/user.service';
 import { User } from '../users/models/user';
-import { Observable, filter, switchMap } from 'rxjs';
+import { Observable, filter, firstValueFrom, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -110,11 +110,12 @@ export class AdminComponent {
               });
 
             if (emailExists) {
-              let info = await this.userService.getUser(this.roleEmail);
-              console.log(
-                info
-              );
-              
+              let info = await firstValueFrom(await this.userService.getUser(this.roleEmail));
+              let infoString: string = 'USER DATA: \n\n';
+              for (const key in info) {
+                infoString += `${key}: ${info[key]}` + '\n'
+              }
+              alert(infoString)
             }
             else {
               alert('User with that Email does not exist!')
