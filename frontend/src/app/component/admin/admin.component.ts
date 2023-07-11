@@ -57,7 +57,25 @@ export class AdminComponent {
             alert('Error: Missing Fields');
           }
           else {
-            console.log(this.email, this.role);
+            let emailExists = await this.auth.checkEmailExists(this.email)
+              .then(res => {
+                return res;
+              })
+              .catch(() => {
+                return false;
+              });
+
+            if (emailExists) {
+              let info = await firstValueFrom(await this.userService.editUser(this.email, this.role))
+              let infoString: string = 'USER DATA: \n\n';
+              for (const key in info) {
+                infoString += `${key}: ${info[key]}` + '\n'
+              }
+              alert(infoString)
+            }
+            else {
+              alert('User with that Email does not exist!')
+            }
           }
           this.email = '';
           this.role = '';
@@ -131,9 +149,17 @@ export class AdminComponent {
         /* modal is closed */
         this.email = '';
         this.role = '';
+        this.delEmail = '';
+        this.roleEmail = '';
         this.setRole = this.fb.group({
           email: '',
           role: ''
+        })
+        this.deleteUser = this.fb.group({
+          delEmail: ''
+        })
+        this.getRole = this.fb.group({
+          roleEmail: ''
         })
       }
 		);

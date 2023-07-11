@@ -68,13 +68,7 @@ export async function get(req: Request, res: Response) {
 export async function patch(req: Request, res: Response) {
   try {
     const {id} = req.params;
-    const {displayName, phoneNumber, role} = req.body;
-
-    if (role) {
-      await admin.auth().setCustomUserClaims(id, {role});
-      const user = await admin.auth().getUser(id);
-      return res.status(204).send({user: mapUser(user)});
-    }
+    const {displayName, phoneNumber} = req.body;
 
     if (!id || !displayName || !phoneNumber) {
       return res.status(400).send({message: "Missing fields"});
@@ -133,6 +127,23 @@ export async function getuser(req: Request, res: Response) {
         return userInfo.uid;
       }
     );
+    const user = await admin.auth().getUser(id);
+    return res.status(200).send(mapUser(user));
+  } catch (err) {
+    return handleError(res, err);
+  }
+}
+
+export async function edituser(req: Request, res: Response) {
+  try {
+    let {id} = req.params;
+    const role = req.body;
+    id = await admin.auth().getUserByEmail(id).then(
+      (userInfo) => {
+        return userInfo.uid;
+      }
+    );
+    await admin.auth().setCustomUserClaims(id, {"role": role});
     const user = await admin.auth().getUser(id);
     return res.status(200).send(mapUser(user));
   } catch (err) {

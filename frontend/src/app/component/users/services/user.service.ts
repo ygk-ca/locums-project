@@ -76,4 +76,12 @@ export class UserService implements OnInit {
       })
     )
   }
+
+  async editUser(email: string, role:string) {
+    return this.http.patch(`${this.baseUrl}/getByEmail/${email}`, role).pipe(
+      map(result => {
+        return result;
+      }),
+    );
+  }
 }

@@ -1,14 +1,15 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import {Application} from "express";
-import {create, all, get, patch, remove, calendar, getuser} from "./controller";
+import {create, all, get, patch, remove, calendar, getuser, edituser} from "./controller";
 import {isAuthenticated} from "../auth/authenticated";
 import {isAuthorized} from "../auth/authorized";
 
 export function routesConfig(app: Application) {
+  // register a user [cors handled in function]
   app.post("/users",
     create
   );
-
   // lists all users
   app.get("/users", [
     isAuthenticated,
@@ -33,15 +34,21 @@ export function routesConfig(app: Application) {
     isAuthorized({hasRole: ["admin"]}),
     remove,
   ]);
-
+  // get user data by Email
   app.get("/users/getByEmail/:id", [
     isAuthenticated,
     isAuthorized({hasRole: ["admin"]}),
     getuser,
   ]
   );
-
+  // get calendar json
   app.get("/calendar", [
     calendar,
+  ]);
+  // edit user role
+  app.patch("/users/getByEmail/:id", [
+    isAuthenticated,
+    isAuthorized({hasRole: ["admin"]}),
+    edituser,
   ]);
 }
