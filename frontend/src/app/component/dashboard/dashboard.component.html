@@ -1,14 +1,22 @@
-<div class="container" *ngIf="user$ | async; let user">
-    <div>
-      <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
-      <div style="float: right; padding-top: 3%;">
-        <button routerLink="/admin" *ngIf="user.role == 'admin'" class="btn btn-primary">Control Panel</button>
-        &nbsp;
-        <button class="btn btn-primary" (click)="edit(user)">Edit Profile</button>
-        &nbsp;
-        <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
-      </div>
+<div *ngIf="user$ | async; let user">
+      <!-- Image and text -->
+      <nav class="navbar navbar-dark" style="background-color: var(--tertiary-color);">
+        <a class="navbar-brand" href="#" style="padding-left: 1%;">
+          <img src="../../../assets/city_logo_white.png" style="vertical-align: middle;" width="80" height="80" class="d-inline-block" alt="">
+          Kingston Locums Project
+        </a>
+        <h4 style="text-align: center; color: var(--secondary-color);"> Welcome back {{user.displayName}}! </h4>
+        <div style="float: right; padding-right: 1%;">
+          <button routerLink="/admin" *ngIf="user.role == 'admin'" class="btn">Control Panel</button>
+          &nbsp;
+          <button class="btn" (click)="edit(user)">Edit Profile</button>
+          &nbsp;
+          <button type="button" class="btn" (click)="logout()">Logout</button>
+        </div>
+      </nav>
+    <div id="calendar">
+      <br>
+      <calendar-component></calendar-component>
+      <br>
     </div>
-    <h4 style="text-align: center;"> Welcome back {{user.displayName}}! </h4>
-    <calendar-component></calendar-component>
 </div>

@@ -1,10 +1,16 @@
-<div class="container" *ngIf="user$ | async; let user">
-    <img src="../../../assets/city_logo_blue.png" alt="" height="150" width="150">
-    <div style="float: right; padding-top: 3%;">
-        <button routerLink="/dashboard" class="btn btn-primary">Back to Dashboard</button>
+<div *ngIf="user$ | async; let user" id="adminContainer">
+    <!-- Image and text -->
+    <nav class="navbar navbar-dark" style="background-color: var(--tertiary-color);">
+    <a class="navbar-brand" href="#" style="padding-left: 1%;">
+      <img src="../../../assets/city_logo_white.png" style="vertical-align: middle;" width="80" height="80" class="d-inline-block" alt="">
+      Kingston Locums Project
+    </a>
+    <div style="float: right; padding-right: 1%;">
+        <button routerLink="/dashboard" class="btn">Back to Dashboard</button>
         &nbsp;
-        <button (click)="logout()" class="btn btn-primary">Logout</button>
+        <button (click)="logout()" class="btn">Logout</button>
     </div>
+  </nav>
     <div *ngIf="user.role == 'admin'" class="container" id="admin">
         <ng-template #content let-modal>
             <div class="modal-header">
@@ -90,11 +96,11 @@
               (click)="modal.close('check')">Save</button>
             </div>
         </ng-template>
-        <h4>Admin Control Panel</h4>
-        <button type="button" class="btn btn-primary" (click)="open(check)">Check User Information</button>
-        &nbsp;
-        <button type="button" class="btn btn-primary" (click)="open(content)">Set User Role</button>
-        &nbsp;
-        <button type="button" class="btn btn-primary" (click)="open(del)">Delete User</button>
+        <h4 style="color: var(--secondary-color);">Admin Control Panel</h4>
+        <span style="color:var(--secondary-color); vertical-align: middle;">Click this button to get all relevant metadata on the user, including registration email, phone number, and role. </span>&nbsp;<button type="button" class="btn" (click)="open(check)">Check User Information</button>
+        <br><br>
+        <span style="color:var(--secondary-color); vertical-align: middle;">Click this button to set a user's role (locum, clinic, or admin) by their email. Please do NOT set people as admins unless they are trusted.</span>&nbsp;<button type="button" class="btn" (click)="open(content)">Set User Role</button>
+        <br><br>
+        <span style="color:var(--secondary-color); vertical-align: middle;">Click this button to delete a user from their email. THIS ACTION IS NON-REVERSIBLE! Please verify the deletion through Firebase Console.</span>&nbsp;<button type="button" class="btn" (click)="open(del)">Delete User</button>
     </div>
 </div>
