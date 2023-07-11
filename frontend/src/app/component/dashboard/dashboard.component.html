@@ -9,11 +9,14 @@
         <div style="float: right; padding-right: 1%;">
           <button routerLink="/admin" *ngIf="user.role == 'admin'" class="btn">Control Panel</button>
           &nbsp;
+          <button routerLink="/clinic" *ngIf="user.role == 'admin' || user.role == 'clinic'" class="btn">Clinic Portal</button>
+          &nbsp;
           <button class="btn" (click)="edit(user)">Edit Profile</button>
           &nbsp;
           <button type="button" class="btn" (click)="logout()">Logout</button>
         </div>
       </nav>
+      <div style="background-color: var(--tertiary-color); color: var(--secondary-color); text-align: right; padding-right: 1%; padding-bottom: 1%;">Role: {{user.role}}</div>
     <div id="calendar">
       <br>
       <calendar-component></calendar-component>

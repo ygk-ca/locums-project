@@ -6,6 +6,7 @@ import { UserDashboardComponent } from './component/dashboard/dashboard.componen
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { AuthService } from './shared/auth.service';
 import { AdminComponent } from './component/admin/admin.component';
+import { ClinicComponent } from './component/clinic/clinic.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:'register', component: RegisterComponent},
   {path:'dashboard', component: UserDashboardComponent, canActivate: [AuthService]},
   {path:'forgot-password', component: ForgotPasswordComponent},
-  {path:'admin', component: AdminComponent, canActivate: [AuthService]}
+  {path:'admin', component: AdminComponent, canActivate: [AuthService]},
+  {path:'clinic', component: ClinicComponent, canActivate: [AuthService]}
 ];
 
 @NgModule({

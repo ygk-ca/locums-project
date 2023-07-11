@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {CalendarModule} from 'src/app/component/dashboard/calendar/calendar.module'; 
 import { UserFormComponent } from './component/users/user-form/user-form/user-form.component';
 import { AdminComponent } from './component/admin/admin.component';
+import { ClinicComponent } from './component/clinic/clinic.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AdminComponent } from './component/admin/admin.component';
     UserDashboardComponent,
     ForgotPasswordComponent,
     UserFormComponent,
-    AdminComponent
+    AdminComponent,
+    ClinicComponent
   ],
   imports: [
     BrowserModule,

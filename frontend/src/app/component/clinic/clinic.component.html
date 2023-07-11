@@ -1,0 +1,17 @@
+<div *ngIf="user$ | async; let user" id="clinicContainer">
+    <!-- Image and text -->
+    <nav class="navbar navbar-dark" style="background-color: var(--tertiary-color);">
+        <a class="navbar-brand" href="#" style="padding-left: 1%;">
+          <img src="../../../assets/city_logo_white.png" style="vertical-align: middle;" width="80" height="80" class="d-inline-block" alt="">
+          Kingston Locums Project
+        </a>
+        <div style="float: right; padding-right: 1%;">
+            <button routerLink="/dashboard" class="btn">Back to Dashboard</button>
+            &nbsp;
+            <button (click)="logout()" class="btn">Logout</button>
+        </div>
+      </nav>
+        <div *ngIf="user.role == 'admin' || user.role == 'clinic'" class="container" id="clinic">
+            <p>clinic works as intended.</p>
+        </div>
+</div>
