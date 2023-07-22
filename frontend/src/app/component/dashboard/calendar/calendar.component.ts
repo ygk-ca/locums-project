@@ -19,6 +19,13 @@ import {DataService} from "./data.service";
         <button (click)="viewDay()" [class]="this.configNavigator.selectMode == 'Day' ? 'selected' : ''">Day</button>
         <button (click)="viewWeek()" [class]="this.configNavigator.selectMode == 'Week' ? 'selected' : ''">Week</button>
         <button (click)="viewMonth()" [class]="this.configNavigator.selectMode == 'Month' ? 'selected' : ''">Month</button>
+        <select name="cars" id="cars" form="carform" class="form-select" style="float: right; width: 25%;  vertical-align: middle;">
+          <option value="volvo">Dr. Jake John</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+
         </div>
 
         <daypilot-calendar [config]="configDay" [events]="events" #day></daypilot-calendar>
