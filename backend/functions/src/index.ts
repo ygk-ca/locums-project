@@ -7,7 +7,8 @@ import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import {routesConfig} from "./users/routes-config";
 const serviceAccount = require("./key/serviceAccountKey.json");
-export const host = "http://localhost:4200";
+// export const host = "localhost:4200";
+export const host = "https://ygk-ca.github.io/";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
