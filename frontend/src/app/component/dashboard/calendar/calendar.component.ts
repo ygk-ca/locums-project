@@ -6,6 +6,8 @@ import {
   DayPilotNavigatorComponent
 } from "@daypilot/daypilot-lite-angular";
 import {DataService} from "./data.service";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { from } from "rxjs";
 
 @Component({
   selector: 'calendar-component',
@@ -19,13 +21,9 @@ import {DataService} from "./data.service";
         <button (click)="viewDay()" [class]="this.configNavigator.selectMode == 'Day' ? 'selected' : ''">Day</button>
         <button (click)="viewWeek()" [class]="this.configNavigator.selectMode == 'Week' ? 'selected' : ''">Week</button>
         <button (click)="viewMonth()" [class]="this.configNavigator.selectMode == 'Month' ? 'selected' : ''">Month</button>
-        <select name="cars" id="cars" form="carform" class="form-select" style="float: right; width: 25%;  vertical-align: middle;">
-          <option value="volvo">Dr. Jake John</option>
-          <option value="saab">Saab</option>
-          <option value="opel">Opel</option>
-          <option value="audi">Audi</option>
-        </select>
-
+            <select id="clinic" name="clinic" class="form-select" style="float: right; width: 25%;  vertical-align: middle;">
+              <option *ngFor="let clinic of clinics" [value]="clinic">{{ clinic }}</option>
+            </select>
         </div>
 
         <daypilot-calendar [config]="configDay" [events]="events" #day></daypilot-calendar>
@@ -78,7 +76,7 @@ export class CalendarComponent implements AfterViewInit {
   @ViewChild("navigator") nav!: DayPilotNavigatorComponent;
 
   events: DayPilot.EventData[] = [];
-
+  clinics: string[] = [];
   date = DayPilot.Date.today();
 
   configNavigator: DayPilot.NavigatorConfig = {
@@ -126,11 +124,12 @@ export class CalendarComponent implements AfterViewInit {
     eventClickHandling: "ContextMenu"
   };
 
-  constructor(private ds: DataService) {
+  constructor(private ds: DataService,  private afs: AngularFirestore) {
     this.viewMonth();
   }
 
   ngAfterViewInit(): void {
+    this.clinics = this.getClinics();
     this.loadEvents();
   }
 
@@ -165,6 +164,26 @@ export class CalendarComponent implements AfterViewInit {
     this.configMonth.visible = true;
   }
 
+  getClinics() {
+    const collectionRef = this.afs.collection("clinics");
+    let clinicNames: string[] = [];
 
+    from(collectionRef.get()).toPromise()
+      .then((querySnapshot) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            // doc.data() contains data of each document in the collection
+            clinicNames.push(doc.id);
+          });
+        } else {
+          console.error("No documents found.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting documents: ", error);
+      }); 
+
+      return clinicNames;   
+  }
 }
 

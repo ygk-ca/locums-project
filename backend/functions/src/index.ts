@@ -7,14 +7,14 @@ import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import {routesConfig} from "./users/routes-config";
 const serviceAccount = require("./key/serviceAccountKey.json");
-export const host = "localhost:4200";
+export const host = "http://localhost:4200";
 // export const host = "https://ygk-ca.github.io";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://locumsfunc-default-rtdb.firebaseio.com",
 });
-
+export const db = admin.firestore();
 const app = express();
 app.use(cors({origin: host}));
 app.use(bodyParser.json());

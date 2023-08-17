@@ -12,6 +12,42 @@
         </div>
       </nav>
         <div *ngIf="user.role == 'admin' || user.role == 'clinic'" class="container" id="clinic">
-            <p>clinic works as intended.</p>
+          <div class="container">
+            <form method="post">
+              <h4>Submit Timesheet</h4>
+              <label for="clinic">Name of Clinic:</label> &nbsp;
+              <label for="clinicName">{{user.displayName}}</label>
+              <br><br>
+              
+              <label for="start_date">Start Date:</label>&nbsp;
+              <input type="date" id="start_date" name="start_date">
+              &nbsp;
+              <label for="end_date">End Date:</label>&nbsp;
+              <input type="date" id="end_date" name="end_date">
+              <br><br>
+              
+              <label for="notes">Additional Notes:</label><br>
+              <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
+              <br><br>
+              
+              <input type="submit" value="Submit">
+          </form>
+          </div>
+          <br>
+          <div class="container">
+            <form method="post">
+              <h4>Delete Timesheet</h4>
+              <label for="start_date">Select Shift:</label>&nbsp;
+              <select id="clinic" name="clinic">
+                <option value="clinic1">Shift 1</option>
+                <option value="clinic2">Shift 2</option>
+                <option value="clinic3">shift 3</option>
+                <!-- Add more options as needed -->
+            </select>
+              <br><br>
+              
+              <input type="submit" value="Submit">
+          </form>
+          </div>
         </div>
 </div>

@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable require-jsdoc */
 import {Request, Response} from "express";
 import * as admin from "firebase-admin";
-import {host} from "..";
+import {db, host} from "..";
 
 export async function create(req: Request, res: Response) {
   const allowedOrigin = host; // Specify the allowed URL
@@ -138,12 +139,22 @@ export async function edituser(req: Request, res: Response) {
   try {
     let {id} = req.params;
     const role = req.body;
+    const email = id;
     id = await admin.auth().getUserByEmail(id).then(
       (userInfo) => {
         return userInfo.uid;
       }
     );
     await admin.auth().setCustomUserClaims(id, {"role": role});
+    if (role == "clinic") {
+      db.collection("clinics").doc(email).set({shifts: {}})
+        .then(() => {
+          // success
+        })
+        .catch((error: any) => {
+          return res.status(500).send({message: `${error.code} - ${error.message}`});
+        });
+    }
     const user = await admin.auth().getUser(id);
     return res.status(200).send(mapUser(user));
   } catch (err) {
