@@ -7,7 +7,7 @@ import {
 } from "@daypilot/daypilot-lite-angular";
 import {DataService} from "./data.service";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { from } from "rxjs";
+import { firstValueFrom, from } from "rxjs";
 
 @Component({
   selector: 'calendar-component',
@@ -168,7 +168,7 @@ export class CalendarComponent implements AfterViewInit {
     const collectionRef = this.afs.collection("clinics");
     let clinicNames: string[] = [];
 
-    from(collectionRef.get()).toPromise()
+    firstValueFrom(from(collectionRef.get()))
       .then((querySnapshot) => {
         if (querySnapshot) {
           querySnapshot.forEach((doc) => {
