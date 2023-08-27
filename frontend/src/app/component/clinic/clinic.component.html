@@ -14,7 +14,7 @@
         <div *ngIf="user.role == 'admin' || user.role == 'clinic'" class="container" id="clinic">
           <div class="container">
             <form [formGroup]="form"
-            (ngSubmit)="save()">
+            (ngSubmit)="addShift()">
               <h4>Submit Timesheet</h4>
               <label for="clinic">Clinic Email:</label> &nbsp;
               <label for="clinicName">{{user.email}}</label>
@@ -37,21 +37,24 @@
               <br><br>
               
               <button type="submit" class="btn" [disabled]="isSaving">
-                {{ isSaving ? 'Adding Shift..' : 'Submit' }}
+                {{ isSaving ? 'Updating Shift..' : 'Submit' }}
               </button>              
           </form>
           </div>
           <hr>
           <br>
           <div class="container">
-            <form method="post">
+            <form [formGroup]="deleteForm" (ngSubmit)="deleteShift()">
               <h4>Delete Timesheet</h4>
               <label for="start_date">Select Shift:</label>&nbsp;
-              <select id="clinic" name="clinic">
+              <select id="clinic" name="clinic" formControlName="delShift">
+                <option [value]=""></option>
                 <option *ngFor="let shift of clinicShifts" [value]="shift">{{ shift }}</option>
               </select>
               <br><br>
-              <button type="submit" class="btn">Submit</button>
+              <button type="submit" class="btn" [disabled]="isSaving">
+                {{ isSaving ? 'Updating Shift..' : 'Submit' }}
+              </button>
           </form>
           </div>
         </div>

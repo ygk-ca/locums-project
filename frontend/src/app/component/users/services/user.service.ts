@@ -92,4 +92,12 @@ export class UserService implements OnInit {
       })
     );
   }
+
+  async deleteShift(email, shiftKey) {
+    return this.http.patch(`${this.baseUrl}/calendardel/${email}`, shiftKey).pipe(
+      map(result => {
+        return result;
+      })
+    );
+  }
 }

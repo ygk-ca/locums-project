@@ -9,10 +9,25 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-db.collection("Clinic1").doc('shifts').set({})
-.then((docRef) => {
-  console.log("Document written with ID: ", docRef.id);
-})
-.catch((error) => {
-  console.error("Error adding document: ", error);
-});
+
+const email = "hsami@cityofkingston.ca";
+const shift = "2023-08-282023-08-31";
+
+const docRef = db.collection("clinics").doc(email);
+    return db.runTransaction((t) => {
+      return t.get(docRef).then((doc) => {
+        const obj = doc.get("shifts");
+        delete obj[shift];
+
+        console.log(obj)
+
+        t.set(docRef, {shifts: obj}, {
+          merge: false,
+        });
+        return;
+      }).then(() => {
+        console.log('done');
+      }).catch((error) => {
+        console.log(error);
+      });
+    });

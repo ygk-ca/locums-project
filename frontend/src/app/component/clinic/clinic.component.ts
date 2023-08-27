@@ -15,6 +15,7 @@ import { Observable, filter, switchMap, firstValueFrom } from 'rxjs';
 export class ClinicComponent {
 
   user$: Observable<User>;
+  originalShift: any = {};
   clinicShifts: any;
   isSaving = false;
   form = new FormGroup({
@@ -23,6 +24,9 @@ export class ClinicComponent {
     clinicName: new FormControl(''),
     mainDoctor: new FormControl(''),
     additionalNotes: new FormControl('')
+  })
+  deleteForm = new FormGroup({
+    delShift: new FormControl('')
   })
 
   constructor(private auth: AuthService, private afAuth: AngularFireAuth, private userService: UserService, private afs: AngularFirestore) {}
@@ -41,24 +45,27 @@ export class ClinicComponent {
 
   async getShifts() {
     const email = await firstValueFrom(this.afAuth.user).then(user => user?.email || "err");
-    const clinicShifts = await firstValueFrom(this.afs.collection("clinics").doc(email).get()).then(doc => doc.data()!["shifts"]);
-    if (Object.keys(clinicShifts).length == 0) {
+    const cShifts = await firstValueFrom(this.afs.collection("clinics").doc(email).get()).then(doc => doc.data()!["shifts"]);
+    if (Object.keys(cShifts).length == 0) {
       return ['No Shifts Submitted']
     }
     else {
       let shifts: any = [];
-      for (let shift in clinicShifts) {
-        let startDate: any = new Date(this.convertDateFormat(clinicShifts[shift].start))
+      for (let shift in cShifts) {
+        let startDate: any = new Date(this.convertDateFormat(cShifts[shift].start))
         startDate = startDate.toDateString();
-        startDate = startDate.substring(0, 15);
+        startDate = startDate.substring(3, 15);
 
-        let endDate: any = new Date(this.convertDateFormat(clinicShifts[shift].end))
+        let endDate: any = new Date(this.convertDateFormat(cShifts[shift].end))
         endDate = endDate.toDateString();
-        endDate = endDate.substring(0, 15);
+        endDate = endDate.substring(4, 15);
 
         let shiftValues =  startDate + ' - ' + endDate;
         shifts.push(shiftValues);
+        
+        this.originalShift[shiftValues] = shift;
       }
+      shifts.sort((a, b) => a.localeCompare(b));
       return shifts;
     }
   }
@@ -73,7 +80,7 @@ export class ClinicComponent {
     return formattedDate;
   }
 
-  async save() {
+  async addShift() {
     let { startingDate, endingDate, clinicName, mainDoctor, additionalNotes } = this.form.value;
     
     if (!startingDate || !endingDate || !additionalNotes || !clinicName || !mainDoctor) {
@@ -107,5 +114,32 @@ export class ClinicComponent {
         window.location.reload();
       }
     }
-  }  
+  }
+  
+  async deleteShift() {
+    let { delShift } = this.deleteForm.value;
+    if (delShift == "" || delShift == null) {
+      alert("Please select a shift!");
+    }
+    else {
+      this.isSaving = true;
+      try {
+        let email = await firstValueFrom(this.afAuth.user).then(user => user?.email || "err");
+        let shiftKey = this.originalShift[delShift];
+        let response = await firstValueFrom(await this.userService.deleteShift(email, shiftKey));
+        alert(response["message"]);
+
+      } catch (error) {
+        // Handle error and show error alert or message
+        console.error(error);
+        alert('An error occurred.');
+      } finally {
+        // Enable the button and hide loading state
+        this.isSaving = false;
+        
+        // Optionally, refresh the page or perform any other necessary action
+        window.location.reload();
+      }
+    }
+  }
 }

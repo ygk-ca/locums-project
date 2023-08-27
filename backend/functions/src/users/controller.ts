@@ -192,3 +192,34 @@ export async function addshift(req: Request, res: Response) {
     return handleError(res, err);
   }
 }
+
+export async function deleteshift(req: Request, res: Response) {
+  try {
+    let {id} = req.params;
+    const shift = req.body;
+    const email = id;
+    id = await admin.auth().getUserByEmail(id).then(
+      (userInfo) => {
+        return userInfo.uid;
+      }
+    );
+    const docRef = db.collection("clinics").doc(email);
+    return db.runTransaction((t) => {
+      return t.get(docRef).then((doc) => {
+        const obj = doc.get("shifts");
+        delete obj[shift];
+
+        t.set(docRef, {shifts: obj}, {
+          merge: false,
+        });
+        return;
+      }).then(() => {
+        return res.status(200).send({message: "Shift Deleted"});
+      }).catch((error) => {
+        return handleError(res, error);
+      });
+    });
+  } catch (err) {
+    return handleError(res, err);
+  }
+}
