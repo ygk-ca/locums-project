@@ -1,0 +1,26 @@
+button {
+    color: var(--secondary-color); 
+    border-color: var(--primary-color);
+    border-color: var(--tertiary-color);
+}
+button:hover {
+    color: var(--secondary-color); 
+    background-color: var(--shaded-primary);
+    border-color: var(--primary-color);
+}
+
+#locum {
+    background-color: var(--tertiary-color);
+    padding: 2%;
+    border-radius: 5%;
+    width: 50%;
+    margin-top: 1%;
+    color: var(--secondary-color); 
+}
+
+#locumSelector {
+    padding: 2%;
+    border-radius: 5%;
+    width: 50%;
+    margin-top: 1%;
+}

@@ -16,6 +16,7 @@ import {CalendarModule} from 'src/app/component/dashboard/calendar/calendar.modu
 import { UserFormComponent } from './component/users/user-form/user-form/user-form.component';
 import { AdminComponent } from './component/admin/admin.component';
 import { ClinicComponent } from './component/clinic/clinic.component';
+import { LocumComponent } from './component/locum/locum.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ClinicComponent } from './component/clinic/clinic.component';
     ForgotPasswordComponent,
     UserFormComponent,
     AdminComponent,
-    ClinicComponent
+    ClinicComponent,
+    LocumComponent,
   ],
   imports: [
     BrowserModule,

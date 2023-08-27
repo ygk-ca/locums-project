@@ -81,7 +81,7 @@ export class CalendarComponent implements AfterViewInit {
   date = DayPilot.Date.today();
 
   configNavigator: DayPilot.NavigatorConfig = {
-    showMonths: 3,
+    showMonths: 2,
     cellWidth: 25,
     cellHeight: 25,
     onVisibleRangeChanged: args => {
@@ -100,7 +100,8 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   configDay: DayPilot.CalendarConfig = {
-    eventMoveHandling: "Disabled"
+    eventMoveHandling: "Disabled",
+    businessBeginsHour: 0
   };
 
   configWeek: DayPilot.CalendarConfig = {
@@ -122,7 +123,6 @@ export class CalendarComponent implements AfterViewInit {
 
   configMonth: DayPilot.MonthConfig = {
     eventMoveHandling: "Disabled",
-    eventClickHandling: "ContextMenu"
   };
 
   constructor(private ds: DataService,  private afs: AngularFirestore) {
@@ -191,6 +191,7 @@ export class CalendarComponent implements AfterViewInit {
     const email = event.target.value;
     let shifts: any[] = [];
     if (email == "") {
+      this.ds.events = [];
       this.loadEvents();
     }
     else {
@@ -198,8 +199,8 @@ export class CalendarComponent implements AfterViewInit {
       for (const key in clinicShifts) {
         shifts.push(
           {
-            start: new DayPilot.Date(clinicShifts[key]["start"] + "T09:00:00"),
-            end: new DayPilot.Date(clinicShifts[key]["end"] + "T17:00:00"),
+            start: new DayPilot.Date(clinicShifts[key]["start"] + "T00:00:00"),
+            end: new DayPilot.Date(clinicShifts[key]["end"] + "T24:00:00"),
             text: clinicShifts[key]["text"]
           }
         )
