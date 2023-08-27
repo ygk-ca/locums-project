@@ -13,26 +13,35 @@
       </nav>
         <div *ngIf="user.role == 'admin' || user.role == 'clinic'" class="container" id="clinic">
           <div class="container">
-            <form method="post">
+            <form [formGroup]="form"
+            (ngSubmit)="save()">
               <h4>Submit Timesheet</h4>
               <label for="clinic">Clinic Email:</label> &nbsp;
               <label for="clinicName">{{user.email}}</label>
               <br><br>
               
-              <label for="start_date">Start Date:</label>&nbsp;
-              <input type="date" id="start_date" name="start_date">
-              &nbsp;
-              <label for="end_date">End Date:</label>&nbsp;
-              <input type="date" id="end_date" name="end_date">
+              <label for="start_date">Start Date:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="date" id="start_date" name="start_date" formControlName="startingDate">
               <br><br>
-              
+              <label for="end_date">End Date:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="date" id="end_date" name="end_date" formControlName="endingDate">
+              <br><br>
+              <label for="clinic_name">Clinic Address:</label>&nbsp;
+              <input type="text" id="clinic_name" name="clinic_name" formControlName="clinicName">
+              <br><br>
+              <label for="main_doctor">Main Doctor:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="text" id="main_doctor" name="main_doctor" formControlName="mainDoctor">
+              <br><br>
               <label for="notes">Additional Notes:</label><br>
-              <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
+              <textarea id="notes" name="notes" rows="4" cols="50" formControlName="additionalNotes"></textarea>
               <br><br>
               
-              <button type="submit" class="btn">Submit</button>
+              <button type="submit" class="btn" [disabled]="isSaving">
+                {{ isSaving ? 'Adding Shift..' : 'Submit' }}
+              </button>              
           </form>
           </div>
+          <hr>
           <br>
           <div class="container">
             <form method="post">

@@ -5,7 +5,7 @@ import { User } from '../users/models/user';
 import { Observable, filter, firstValueFrom, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({

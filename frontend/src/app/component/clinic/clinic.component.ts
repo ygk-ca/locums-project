@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -15,6 +16,14 @@ export class ClinicComponent {
 
   user$: Observable<User>;
   clinicShifts: any;
+  isSaving = false;
+  form = new FormGroup({
+    startingDate: new FormControl(''),
+    endingDate: new FormControl(''),
+    clinicName: new FormControl(''),
+    mainDoctor: new FormControl(''),
+    additionalNotes: new FormControl('')
+  })
 
   constructor(private auth: AuthService, private afAuth: AngularFireAuth, private userService: UserService, private afs: AngularFirestore) {}
 
@@ -36,6 +45,67 @@ export class ClinicComponent {
     if (Object.keys(clinicShifts).length == 0) {
       return ['No Shifts Submitted']
     }
-    return clinicShifts;
+    else {
+      let shifts: any = [];
+      for (let shift in clinicShifts) {
+        let startDate: any = new Date(this.convertDateFormat(clinicShifts[shift].start))
+        startDate = startDate.toDateString();
+        startDate = startDate.substring(0, 15);
+
+        let endDate: any = new Date(this.convertDateFormat(clinicShifts[shift].end))
+        endDate = endDate.toDateString();
+        endDate = endDate.substring(0, 15);
+
+        let shiftValues =  startDate + ' - ' + endDate;
+        shifts.push(shiftValues);
+      }
+      return shifts;
+    }
   }
+
+  convertDateFormat(inputDate) {
+    // Split the input date string into year, month, and day parts
+    const [year, month, day] = inputDate.split("-");
+  
+    // Rearrange the parts to the MM/DD/YYYY format
+    const formattedDate = `${month}/${day}/${year}`;
+  
+    return formattedDate;
+  }
+
+  async save() {
+    let { startingDate, endingDate, clinicName, mainDoctor, additionalNotes } = this.form.value;
+    
+    if (!startingDate || !endingDate || !additionalNotes || !clinicName || !mainDoctor) {
+      alert('Missing Fields!');
+    } else if (endingDate < startingDate) {
+      alert('Invalid Dates!');
+    } else {
+      // Disable the button and show loading state
+      this.isSaving = true; // Create a boolean variable in your component to track the loading state
+  
+      try {
+        let email = await firstValueFrom(this.afAuth.user).then(user => user?.email || "err");
+        let info = {
+          start: startingDate,
+          end: endingDate,
+          text: clinicName + '\n' + mainDoctor + '\n' + additionalNotes
+        };
+        let response = await firstValueFrom(await this.userService.addShift(email, info));
+  
+        // Show success alert or message
+        alert(response["message"]);
+      } catch (error) {
+        // Handle error and show error alert or message
+        console.error(error);
+        alert('An error occurred.');
+      } finally {
+        // Enable the button and hide loading state
+        this.isSaving = false;
+        
+        // Optionally, refresh the page or perform any other necessary action
+        window.location.reload();
+      }
+    }
+  }  
 }

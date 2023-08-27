@@ -6,14 +6,7 @@ import { UserService } from "../../users/services/user.service";
 @Injectable()
 export class DataService {
 
-  events: any[] = [
-    {
-      id: "1",
-      start: new DayPilot.Date("2023-08-02T07:30:00"),
-      end: new DayPilot.Date("2023-08-02T16:30:00"),
-      text: "Belleville Clinic #3 \n Dr. Jake John \n 10:00 AM - 4:00 PM",
-    }
-  ];
+  events: any[] = [];
 
   constructor(private http : HttpClient, private userService: UserService){
   }

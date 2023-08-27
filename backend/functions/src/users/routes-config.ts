@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import {Application} from "express";
-import {create, all, get, patch, remove, calendar, getuser, edituser} from "./controller";
+import {create, all, get, patch, remove, calendar, getuser, edituser, addshift} from "./controller";
 import {isAuthenticated} from "../auth/authenticated";
 import {isAuthorized} from "../auth/authorized";
 
@@ -50,5 +50,11 @@ export function routesConfig(app: Application) {
     isAuthenticated,
     isAuthorized({hasRole: ["admin"]}),
     edituser,
+  ]);
+
+  // add shift
+  app.patch("/calendar/:id", [
+    isAuthenticated,
+    addshift,
   ]);
 }

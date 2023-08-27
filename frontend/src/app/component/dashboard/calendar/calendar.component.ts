@@ -19,9 +19,10 @@ import { firstValueFrom, from } from "rxjs";
       <div class="content">
         <div class="buttons">
         <button (click)="viewDay()" [class]="this.configNavigator.selectMode == 'Day' ? 'selected' : ''">Day</button>
-        <button (click)="viewWeek()" [class]="this.configNavigator.selectMode == 'Week' ? 'selected' : ''">Week</button>
+        <!-- <button (click)="viewWeek()" [class]="this.configNavigator.selectMode == 'Week' ? 'selected' : ''">Week</button> -->
         <button (click)="viewMonth()" [class]="this.configNavigator.selectMode == 'Month' ? 'selected' : ''">Month</button>
-            <select id="clinic" name="clinic" class="form-select" style="float: right; width: 25%;  vertical-align: middle;">
+            <select id="clinic" name="clinic" class="form-select" style="float: right; width: 25%;  vertical-align: middle;" (change)="update($event)">
+              <option value=""></option>
               <option *ngFor="let clinic of clinics" [value]="clinic">{{ clinic }}</option>
             </select>
         </div>
@@ -140,7 +141,7 @@ export class CalendarComponent implements AfterViewInit {
       this.events = result;
     });
 
-    this.ds.getCalendar().subscribe(result => {console.log(result);});
+    //this.ds.getCalendar().subscribe(result => {console.log(result);});
   }
 
   viewDay():void {
@@ -184,6 +185,28 @@ export class CalendarComponent implements AfterViewInit {
       }); 
 
       return clinicNames;   
+  }
+
+  async update(event: any) {
+    const email = event.target.value;
+    let shifts: any[] = [];
+    if (email == "") {
+      this.loadEvents();
+    }
+    else {
+      const clinicShifts = await firstValueFrom(this.afs.collection("clinics").doc(email).get()).then(doc => doc.data()!["shifts"]);
+      for (const key in clinicShifts) {
+        shifts.push(
+          {
+            start: new DayPilot.Date(clinicShifts[key]["start"] + "T09:00:00"),
+            end: new DayPilot.Date(clinicShifts[key]["end"] + "T17:00:00"),
+            text: clinicShifts[key]["text"]
+          }
+        )
+      }
+      this.ds.events = shifts;
+      this.loadEvents();
+    }
   }
 }
 
