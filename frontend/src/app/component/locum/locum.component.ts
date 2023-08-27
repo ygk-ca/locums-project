@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { User } from '../users/models/user';
 import { Observable, filter, firstValueFrom, from, switchMap } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UserService } from '../users/services/user.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+declare var Email: any;
 
 @Component({
   selector: 'app-locum',
@@ -18,6 +21,10 @@ export class LocumComponent {
   clinics: string[] = this.getClinics(); // Sample clinic data
   shifts: string[] = []; // Will be populated based on selected clinic
   originalShift: any = {};
+  isSaving = false;
+  form = new FormGroup({
+    text: new FormControl('')
+  });
 
   async updateSecondSelect() {
     // Logic to update shifts based on selectedClinic
@@ -27,6 +34,10 @@ export class LocumComponent {
       this.shifts = []; // No selected clinic, clear shifts
       this.selectedShift = "";
     }
+  }
+
+  get emailSubject() {
+    return `Shift Inquiry | ${this.selectedShift} | ${this.selectedClinic}`;
   }
 
   constructor(private auth: AuthService, private userService: UserService, private afAuth: AngularFireAuth, private afs: AngularFirestore) {}
@@ -98,5 +109,40 @@ export class LocumComponent {
     const formattedDate = `${month}/${day}/${year}`;
   
     return formattedDate;
+  }
+
+  sendEmail(selectedClinic, selectedShift, email) {
+    let { text } = this.form.value;
+    
+    if ( selectedClinic !== null && selectedClinic !== undefined && selectedShift !== null && selectedShift !== undefined && text !== null && text !== undefined && text.length > 150) {
+      this.isSaving = true;
+      try {
+        Email.send({
+          Host : "smtp.elasticemail.com",
+          Username : "hsami@cityofkingston.ca",
+          Password : "836E0ED8F2ACBA227760A1EEFB93715D1B0B",
+          To : selectedClinic,
+          From : "hsami@cityofkingston.ca",
+          Subject : `Shift Inquiry: ${selectedShift} - ${email}: `,
+          Body : text
+      })
+      // .then(
+      //   message => alert(message)
+      // );
+        alert('Email sent successfully')
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred");
+      } finally {
+        // Enable the button and hide loading state
+        this.isSaving = false;
+        
+        // Optionally, refresh the page or perform any other necessary action
+        window.location.reload();
+      }
+    }
+    else {
+      alert("Please select a valid shift, clinic, and enter a message.")
+    }
   }
 }
